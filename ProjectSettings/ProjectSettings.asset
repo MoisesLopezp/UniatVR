@@ -141,12 +141,16 @@ PlayerSettings:
   targetPixelDensity: 0
   resolutionScalingMode: 0
   applicationIdentifier:
+<<<<<<< HEAD
     Android: com.Alses.UniatVR
+=======
+    Standalone: com.oculus.UnitySample
+>>>>>>> aa45fe1e265ebd0903e213a9bab12b65c048384b
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
-  AndroidPreferredInstallLocation: 1
+  AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
   iPhoneStrippingLevel: 0
@@ -232,10 +236,18 @@ PlayerSettings:
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs: []
   m_BuildTargetVRSettings:
+<<<<<<< HEAD
   - m_BuildTarget: Android
     m_Enabled: 1
     m_Devices:
     - cardboard
+=======
+  - m_BuildTarget: Standalone
+    m_Enabled: 1
+    m_Devices:
+    - Oculus
+    - OpenVR
+>>>>>>> aa45fe1e265ebd0903e213a9bab12b65c048384b
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   webPlayerTemplate: APPLICATION:Default
