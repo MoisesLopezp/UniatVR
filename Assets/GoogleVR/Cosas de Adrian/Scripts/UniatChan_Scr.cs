@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class UniatChan_Scr : MonoBehaviour
 {
+    Animator anim;
+
+    private void Start()
+    {
+        anim = this.GetComponent<Animator>();    
+    }
+
     public void Picar()
     {
-        this.GetComponent<Rigidbody>().AddForce(Vector3.up * 50);
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            anim.SetTrigger("Jump");
     }
 }
