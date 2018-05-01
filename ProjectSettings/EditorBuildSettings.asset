@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Cosas de Adrian/CardboardVR.unity
     guid: 2c696d87b10ef2d45987de21178e6863
+  - enabled: 1
+    path: Assets/TestOculus.unity
+    guid: b6ed35b8b81982d43ba399fb35f999f9

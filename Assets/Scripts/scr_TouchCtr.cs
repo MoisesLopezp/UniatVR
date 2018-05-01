@@ -16,34 +16,41 @@ public class scr_TouchCtr : MonoBehaviour {
 
     public GameObject Player;
 
+    OVRInput.Axis1D GrabButton;
+
     bool IsRight = true;
+
+    scr_HandsControl HandsParent;
 
 	// Use this for initialization
 	void Start () {
         ObjectGrab = null;
         PosibleObjectGrab = null;
+        HandsParent = transform.parent.GetComponent<scr_HandsControl>();
 
         Hand = AnimatorHand.gameObject;
         if (MyController == OVRInput.Controller.RTouch)
         {
             IsRight = true;
+            GrabButton = OVRInput.Axis1D.SecondaryHandTrigger;
         } else
         {
             IsRight = false;
+            GrabButton = OVRInput.Axis1D.PrimaryHandTrigger;
         }
     }
 
     // Update is called once per frame
     void Update () {
         if (!OVRInput.GetControllerPositionTracked(MyController))
-        {
             Debug.Log("No traking");
-        }
+        
+        Quaternion HandQ = OVRInput.GetLocalControllerRotation(MyController);
 
-        transform.position = Player.transform.position+OVRInput.GetLocalControllerPosition(MyController)+new Vector3(0f,0.6f,0f);
-        transform.rotation = OVRInput.GetLocalControllerRotation(MyController);
+        transform.localPosition = OVRInput.GetLocalControllerPosition(MyController)+new Vector3(0f,0.6f,0f);
+        transform.rotation =  Quaternion.Euler(HandQ.eulerAngles.x, HandQ.eulerAngles.y +HandsParent.plusRot, HandQ.eulerAngles.z);
 
-        if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, MyController)>0.5)
+        if (OVRInput.Get(GrabButton)>0.5)
         {
             AnimatorHand.SetBool("Grab",true);
             if (PosibleObjectGrab && !ObjectGrab)
@@ -53,6 +60,10 @@ public class scr_TouchCtr : MonoBehaviour {
                 ObjectGrab.transform.rotation = Quaternion.identity;
                 ObjectGrab.GetComponent<Rigidbody>().useGravity = false;
                 ObjectGrab.transform.SetParent(Hand.transform);
+                if (ObjectGrab.GetComponent<SphereCollider>())
+                    ObjectGrab.GetComponent<SphereCollider>().enabled = false;
+                if (ObjectGrab.GetComponent<BoxCollider>())
+                    ObjectGrab.GetComponent<BoxCollider>().enabled = false;
             }
         } else
         {
@@ -62,6 +73,10 @@ public class scr_TouchCtr : MonoBehaviour {
                 ObjectGrab.GetComponent<Rigidbody>().useGravity = true;
                 ObjectGrab.GetComponent<Rigidbody>().velocity = OVRInput.GetLocalControllerVelocity(MyController);
                 ObjectGrab.transform.parent = null;
+                if (ObjectGrab.GetComponent<SphereCollider>())
+                    ObjectGrab.GetComponent<SphereCollider>().enabled = true;
+                if (ObjectGrab.GetComponent<BoxCollider>())
+                    ObjectGrab.GetComponent<BoxCollider>().enabled = true;
                 ObjectGrab = null;
             }
         }
@@ -83,6 +98,14 @@ public class scr_TouchCtr : MonoBehaviour {
         if (other.CompareTag("CanGrab") && !ObjectGrab && !PosibleObjectGrab)
         {
             PosibleObjectGrab = other.gameObject;
+        }
+
+        if (other.CompareTag("UniatChan"))
+        {
+            other.GetComponent<Animator>().SetTrigger("Dance");
+            scr_FireWorks FireW = FindObjectOfType<scr_FireWorks>();
+            if (FireW)
+                FireW.StartParty();
         }
     }
 

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class scr_Oso : MonoBehaviour {
 
     NavMeshAgent Nav;
-    Animation Anim;
+    Animator Anim;
 
     public GameObject Target;
 
@@ -18,24 +18,23 @@ public class scr_Oso : MonoBehaviour {
 	void Start () {
         //Target = FindObjectOfType<UniatChan_Scr>().gameObject;
         Nav = GetComponent<NavMeshAgent>();
-        Anim = GetComponentInChildren<Animation>();
-        Anim.Play("Walk");
+        Anim = GetComponentInChildren<Animator>();
+        Anim.SetBool("Run",true);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Nav.enabled)
+        if (Nav.enabled && Target!=null)
         {
             Nav.SetDestination(Target.transform.position);
-            if (Nav.isStopped && Anim.IsPlaying("Run"))
+            if (Nav.isStopped && Anim.GetCurrentAnimatorClipInfo(0)[0].clip.name!="Hit")
             {
                 Nav.isStopped = false;
             }
-            if (Vector3.Distance(transform.position, Target.transform.position)<1f)
+            if (Vector3.Distance(transform.position, Target.transform.position)<1.6f)
             {
                 Nav.isStopped = true;
-                Anim.Play("Claws Attack 1");
-                Anim.PlayQueued("Run");
+                Anim.SetTrigger("Attack");
             }
         }
         
@@ -47,15 +46,22 @@ public class scr_Oso : MonoBehaviour {
         if (HP<=0)
         {
             HP = 0;
-            Nav.isStopped = true;
             Nav.enabled = false;
             IsDead = false;
-            Anim.Play("Death");
+            Anim.SetTrigger("Die");
+            transform.GetChild(0).localPosition = new Vector3(0f,0.25f,0f);
         } else
         {
-            Anim.Play("Hit");
+            Anim.SetTrigger("Hit");
             Nav.isStopped = true;
-            Anim.PlayQueued("Run");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Hand") || other.CompareTag("CandGrab") && !IsDead)
+        {
+            AddDammage(30);
         }
     }
 }
