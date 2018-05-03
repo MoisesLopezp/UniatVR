@@ -28,7 +28,7 @@ public class UniatChan_Scr : MonoBehaviour
     {
         if (index < waypoint.Length)
         {
-            transform.LookAt(waypoint[index].position);
+            agent.updateRotation = true;
             if (Vector3.Distance(this.transform.position, waypoint[index].position) < 1)
                 ChangeState();
         }
