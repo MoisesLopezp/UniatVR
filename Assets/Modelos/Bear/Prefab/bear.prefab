@@ -23,7 +23,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 489818}
-  - component: {fileID: 11170432}
+  - component: {fileID: 95975899341580240}
   m_Layer: 0
   m_Name: bear
   m_TagString: Untagged
@@ -496,30 +496,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &11170432
-Animation:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105100}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  m_Animations:
-  - {fileID: 7400000, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400002, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400004, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400006, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400008, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400010, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400012, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400014, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400016, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  - {fileID: 7400018, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!137 &13780136
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -590,3 +566,20 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 105100}
   m_IsPrefabParent: 1
+--- !u!95 &95975899341580240
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105100}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e7c5915c42c24fc44aeaf486b80e656d, type: 3}
+  m_Controller: {fileID: 9100000, guid: a59baa5c95115d540b64ee18e4bb6c96, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1

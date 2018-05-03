@@ -28,6 +28,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class OVRPlayerController : MonoBehaviour
 {
+    public scr_HandsControl Hands;
+
 	/// <summary>
 	/// The rate acceleration during movement.
 	/// </summary>
@@ -396,7 +398,8 @@ public class OVRPlayerController : MonoBehaviour
 		if (EnableRotation)
 		{
 			Vector3 euler = transform.rotation.eulerAngles;
-			float rotateInfluence = SimulationRate * Time.deltaTime * RotationAmount * RotationScaleMultiplier;
+
+            float rotateInfluence = SimulationRate * Time.deltaTime * RotationAmount * RotationScaleMultiplier;
 
 			bool curHatLeft = OVRInput.Get(OVRInput.Button.PrimaryShoulder);
 
@@ -429,7 +432,8 @@ public class OVRPlayerController : MonoBehaviour
 					if (ReadyToSnapTurn)
 					{
 						euler.y -= RotationRatchet;
-						ReadyToSnapTurn = false;
+                        Hands.plusRot -= RotationRatchet;
+                        ReadyToSnapTurn = false;
 					}
 				}
 				else if (OVRInput.Get(OVRInput.Button.SecondaryThumbstickRight))
@@ -437,7 +441,8 @@ public class OVRPlayerController : MonoBehaviour
 					if (ReadyToSnapTurn)
 					{
 						euler.y += RotationRatchet;
-						ReadyToSnapTurn = false;
+                        Hands.plusRot += RotationRatchet;
+                        ReadyToSnapTurn = false;
 					}
 				}
 				else
@@ -449,10 +454,12 @@ public class OVRPlayerController : MonoBehaviour
 			{
 				Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
 				euler.y += secondaryAxis.x * rotateInfluence;
+                
 			}
+            
+            transform.rotation = Quaternion.Euler(euler);
 
-			transform.rotation = Quaternion.Euler(euler);
-		}
+        }
 	}
 
 
