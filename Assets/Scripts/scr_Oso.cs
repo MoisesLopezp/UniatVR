@@ -42,6 +42,8 @@ public class scr_Oso : MonoBehaviour {
 
     public void AddDammage(float dmg)
     {
+        if (IsDead)
+            return;
         HP -= dmg;
         if (HP<=0)
         {

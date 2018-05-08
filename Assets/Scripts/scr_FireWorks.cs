@@ -31,4 +31,12 @@ public class scr_FireWorks : MonoBehaviour {
 
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("UniatChan"))
+        {
+            StartParty();
+        }
+    }
+
 }

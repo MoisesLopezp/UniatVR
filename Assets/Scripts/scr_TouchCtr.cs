@@ -99,14 +99,6 @@ public class scr_TouchCtr : MonoBehaviour {
         {
             PosibleObjectGrab = other.gameObject;
         }
-
-        if (other.CompareTag("UniatChan"))
-        {
-            other.GetComponent<Animator>().SetTrigger("Dance");
-            scr_FireWorks FireW = FindObjectOfType<scr_FireWorks>();
-            if (FireW)
-                FireW.StartParty();
-        }
     }
 
     private void OnTriggerExit(Collider other)
