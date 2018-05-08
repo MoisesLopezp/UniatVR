@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Player_Scr : MonoBehaviour
 {
+    public GameObject particle;
+
     Transform camara_transform;
     MenuPause_Scr pausa;
+    float timer;
+    bool fireing;
 
     private void Start()
     {
+        fireing = false;
         pausa = FindObjectOfType<MenuPause_Scr>();
         camara_transform = this.transform.GetChild(0).GetComponent<Transform>();   
     }
@@ -20,5 +25,26 @@ public class Player_Scr : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
             pausa.Pausa();
+
+        if (Input.GetButtonDown("Fire3") && !fireing)
+            Fire();
+
+        if (fireing)
+        {
+            timer += Time.deltaTime;
+            if (timer > 1)
+            {
+                fireing = false;
+                particle.SetActive(false);
+                timer = 0;
+            }
+        }
+    }
+
+    void Fire()
+    {
+        Debug.Log("pew");
+        fireing = true;
+        particle.SetActive(true);
     }
 }

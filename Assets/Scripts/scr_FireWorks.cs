@@ -31,9 +31,9 @@ public class scr_FireWorks : MonoBehaviour {
 
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("UniatChan"))
+        if (other.CompareTag("UniatChan"))
         {
             StartParty();
         }
