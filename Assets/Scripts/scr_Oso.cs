@@ -52,10 +52,13 @@ public class scr_Oso : MonoBehaviour {
             IsDead = false;
             Anim.SetTrigger("Die");
             transform.GetChild(0).localPosition = new Vector3(0f,0.25f,0f);
+            Destroy(gameObject, 0f);
+            scr_SpawnEnemys.Osos--;
         } else
         {
             Anim.SetTrigger("Hit");
             Nav.isStopped = true;
+            Target.SendMessage("AddDammage", 10f);
         }
     }
 
