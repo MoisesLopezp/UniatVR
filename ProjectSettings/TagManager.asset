@@ -7,6 +7,7 @@ TagManager:
   - CanGrab
   - Hand
   - UniatChan
+  - Bear
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player_Scr : MonoBehaviour
 {
     public GameObject particle;
+    public GameObject bullet;
 
     Transform camara_transform;
     MenuPause_Scr pausa;
@@ -26,7 +27,7 @@ public class Player_Scr : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
             pausa.Pausa();
 
-        if (Input.GetButtonDown("Fire3") && !fireing)
+        if ((Input.GetButtonDown("Fire3") && !fireing) || (Input.GetMouseButtonDown(0) && !fireing))
             Fire();
 
         if (fireing)
@@ -46,5 +47,6 @@ public class Player_Scr : MonoBehaviour
         Debug.Log("pew");
         fireing = true;
         particle.SetActive(true);
+        Instantiate(bullet, particle.transform);
     }
 }
