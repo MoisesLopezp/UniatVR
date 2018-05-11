@@ -31,10 +31,11 @@ public class scr_Oso : MonoBehaviour {
             {
                 Nav.isStopped = false;
             }
-            if (Vector3.Distance(transform.position, Target.transform.position)<1.6f)
+            if (Vector3.Distance(transform.position, Target.transform.position)<1.6f && !Nav.isStopped)
             {
                 Nav.isStopped = true;
                 Anim.SetTrigger("Attack");
+                Target.SendMessage("AddDammage", 10f);
             }
         }
         
@@ -49,22 +50,23 @@ public class scr_Oso : MonoBehaviour {
         {
             HP = 0;
             Nav.enabled = false;
-            IsDead = false;
+            IsDead = true;
+            GetComponent<CapsuleCollider>().enabled = false;
+            GetComponent<Rigidbody>().useGravity = false;
             Anim.SetTrigger("Die");
             transform.GetChild(0).localPosition = new Vector3(0f,0.25f,0f);
-            Destroy(gameObject, 0f);
+            Destroy(gameObject, 5f);
             scr_SpawnEnemys.Osos--;
         } else
         {
             Anim.SetTrigger("Hit");
             Nav.isStopped = true;
-            Target.SendMessage("AddDammage", 10f);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Hand") || other.CompareTag("CandGrab") && !IsDead)
+        if (other.CompareTag("Hand") || other.CompareTag("CanGrab") && !IsDead)
         {
             AddDammage(30);
         }

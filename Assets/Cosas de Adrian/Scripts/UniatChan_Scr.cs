@@ -17,9 +17,10 @@ public class UniatChan_Scr : MonoBehaviour
     bool IsDead = false;
     float HP = 100f;
 
-    public Slider Hp_Slider;
+    public GameObject GO;
+    public GameObject Enemys;
 
-    public Camera cameraToLookAt;
+    public Slider Hp_Slider;
 
     private void Start()
     {
@@ -34,6 +35,9 @@ public class UniatChan_Scr : MonoBehaviour
 
     private void Update()
     {
+        if (!agent.enabled)
+            return;
+
         if (index < waypoint.Length)
         {
             agent.updateRotation = true;
@@ -50,7 +54,7 @@ public class UniatChan_Scr : MonoBehaviour
         else if (atCheckpoint)
             NewWaypoint();
 
-        cameraToLookAt.GetComponent<RectTransform>().position = cameraToLookAt.GetComponent<Camera>().WorldToScreenPoint(cameraToLookAt.gameObject.transform.position + new Vector3(0f, 1f, 0f));
+        //Hp_Slider.GetComponent<RectTransform>().position = cameraToLookAt.GetComponent<Camera>().WorldToScreenPoint(cameraToLookAt.gameObject.transform.position + new Vector3(0f, 1f, 0f));
 
     }
 
@@ -76,6 +80,9 @@ public class UniatChan_Scr : MonoBehaviour
 
     void NewWaypoint()
     {
+        if (!agent.enabled)
+            return;
+
         agent.SetDestination(waypoint[index].position);
         anim.SetBool("Walking", true);
         atCheckpoint = false;
@@ -83,6 +90,9 @@ public class UniatChan_Scr : MonoBehaviour
 
     void Checkpoint()
     {
+        if (!agent.enabled)
+            return;
+
         anim.SetBool("Walking", false);
         anim.SetTrigger("Jump");
         atCheckpoint = true;
@@ -109,11 +119,9 @@ public class UniatChan_Scr : MonoBehaviour
         {
             HP = 0;
             agent.enabled = false;
-            IsDead = false;
-            anim.SetTrigger("Die");
-            transform.GetChild(0).localPosition = new Vector3(0f, 0.25f, 0f);
-            Destroy(gameObject, 0f);
-            scr_SpawnEnemys.Osos--;
+            IsDead = true;
+            anim.SetTrigger("Cry");
+            Enemys.SetActive(false);
         }
         Hp_Slider.value = HP;
     }

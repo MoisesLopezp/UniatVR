@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 7970d6e31a2427345bb110f402cdaef4
+timeCreated: 1526068454
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Bakso Sapi
+  fontNames:
+  - Bakso Sapi
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

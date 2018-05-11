@@ -8,8 +8,11 @@ public class scr_FireWorks : MonoBehaviour {
 
     public GameObject[] FireWorks = new GameObject[3];
 
+    public GameObject Victory;
+
     public void StartParty()
     {
+        Victory.SetActive(true);
         StartCoroutine(PartyLoop());
     }
 

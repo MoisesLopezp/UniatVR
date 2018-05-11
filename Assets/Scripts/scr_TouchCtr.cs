@@ -17,6 +17,7 @@ public class scr_TouchCtr : MonoBehaviour {
     public GameObject Player;
 
     OVRInput.Axis1D GrabButton;
+    OVRInput.Axis1D AcctionButton;
 
     bool IsRight = true;
 
@@ -33,10 +34,12 @@ public class scr_TouchCtr : MonoBehaviour {
         {
             IsRight = true;
             GrabButton = OVRInput.Axis1D.SecondaryHandTrigger;
+            AcctionButton = OVRInput.Axis1D.SecondaryIndexTrigger;
         } else
         {
             IsRight = false;
             GrabButton = OVRInput.Axis1D.PrimaryHandTrigger;
+            AcctionButton = OVRInput.Axis1D.PrimaryIndexTrigger;
         }
     }
 
@@ -85,6 +88,10 @@ public class scr_TouchCtr : MonoBehaviour {
         {
             ObjectGrab.transform.position = Hand.transform.position;
             ObjectGrab.transform.rotation = Hand.transform.rotation;
+            if (OVRInput.Get(AcctionButton)>0.5)
+            {
+                ObjectGrab.SendMessage("Touch_Acction");
+            }
         }
 
         if (!PosibleObjectGrab)
