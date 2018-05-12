@@ -1,40 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/////////////////////DEBUG///////////////
-using UnityEngine.UI;
 
 public class Player_Scr : MonoBehaviour
 {
-    Transform camara_transform;
-    MenuPause_Scr pausa;
+    public GameObject particle;
+    public GameObject bullet;
 
-    /////////////////////DEBUG////////////////
-    public Text text;
+    GameObject camara_transform;
+    MenuPause_Scr pausa;
+    float timer;
+    bool fireing;
 
     private void Start()
     {
+        fireing = false;
         pausa = FindObjectOfType<MenuPause_Scr>();
-        camara_transform = this.transform.GetChild(0).GetComponent<Transform>();   
+        camara_transform = this.transform.GetChild(0).gameObject;   
     }
 
     void Update ()
     {
-        this.transform.Translate(camara_transform.forward * Time.deltaTime * 3 * Input.GetAxis("Vertical"));
-        this.transform.Translate(camara_transform.right * Time.deltaTime * 3 * Input.GetAxis("Horizontal"));
+        this.transform.Translate(camara_transform.transform.forward * Time.deltaTime * 3 * Input.GetAxis("Vertical"));
+        this.transform.Translate(camara_transform.transform.right * Time.deltaTime * 3 * Input.GetAxis("Horizontal"));
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetButtonDown("Jump"))
             pausa.Pausa();
 
-        /////////////////////DEBUG///////////////
-        if (Input.GetButton("Fire1"))
-            text.text = "Fire1";
-        if (Input.GetButton("Fire2"))
-            text.text = "Fire2";
-        if (Input.GetButton("Fire3"))
-            text.text = "Fire3";
-        if (Input.GetButton("Jump"))
-            text.text = "jump";
+        if ((Input.GetButtonDown("Fire3") && !fireing) || (Input.GetMouseButtonDown(0) && !fireing))
+            Fire();
 
+        if (fireing)
+        {
+            timer += Time.deltaTime;
+            if (timer > 1)
+            {
+                fireing = false;
+                particle.SetActive(false);
+                timer = 0;
+            }
+        }
+    }
+
+    void Fire()
+    {
+        Debug.Log("pew");
+        fireing = true;
+        particle.SetActive(true);
+        Instantiate(bullet, particle.transform);
+        //bulletin.parent = null;
+    // bulletin.rotation = camara_transform.transform.localRotation;
     }
 }

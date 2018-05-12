@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class UniatChan_Scr : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class UniatChan_Scr : MonoBehaviour
     NavMeshAgent agent;
     bool viendo, atCheckpoint;
     float timer;
+
+    bool IsDead = false;
+    float HP = 100f;
+
+    public Slider Hp_Slider;
+
+    public Camera cameraToLookAt;
 
     private void Start()
     {
@@ -41,6 +49,8 @@ public class UniatChan_Scr : MonoBehaviour
             timer += Time.deltaTime;
         else if (atCheckpoint)
             NewWaypoint();
+
+        Hp_Slider.GetComponent<RectTransform>().position = cameraToLookAt.GetComponent<Camera>().WorldToScreenPoint(cameraToLookAt.gameObject.transform.position + new Vector3(0f, 1f, 0f));
 
     }
 
@@ -88,5 +98,23 @@ public class UniatChan_Scr : MonoBehaviour
     {
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             anim.SetTrigger("Jump");
+    }
+
+    public void AddDammage(float dmg)
+    {
+        if (IsDead)
+            return;
+        HP -= dmg;
+        if (HP <= 0)
+        {
+            HP = 0;
+            agent.enabled = false;
+            IsDead = false;
+            anim.SetTrigger("Die");
+            transform.GetChild(0).localPosition = new Vector3(0f, 0.25f, 0f);
+            Destroy(gameObject, 0f);
+            scr_SpawnEnemys.Osos--;
+        }
+        Hp_Slider.value = HP;
     }
 }
