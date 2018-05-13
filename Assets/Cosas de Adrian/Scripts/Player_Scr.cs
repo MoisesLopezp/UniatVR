@@ -47,6 +47,8 @@ public class Player_Scr : MonoBehaviour
         Debug.Log("pew");
         fireing = true;
         particle.SetActive(true);
-        Instantiate(bullet, particle.transform);
+        GameObject balin =  Instantiate(bullet, particle.transform.position, particle.transform.rotation);
+        balin.GetComponent<Rigidbody>().AddForce(balin.transform.forward * 1500);
+        balin.transform.parent = null;
     }
 }

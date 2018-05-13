@@ -35,26 +35,29 @@ public class UniatChan_Scr : MonoBehaviour
 
     private void Update()
     {
-        if (!agent.enabled)
-            return;
-
-        if (index < waypoint.Length)
+        if (!IsDead)
         {
-            agent.updateRotation = true;
-            if (Vector3.Distance(this.transform.position, waypoint[index].position) < 1)
-                ChangeState();
+            if (!agent.enabled)
+                return;
+
+            if (index < waypoint.Length)
+            {
+                agent.updateRotation = true;
+                if (Vector3.Distance(this.transform.position, waypoint[index].position) < 1)
+                    ChangeState();
+            }
+
+
+            if (Input.GetButton("Jump") && viendo)
+                Picar();
+
+            if (atCheckpoint && timer < 7)
+                timer += Time.deltaTime;
+            else if (atCheckpoint)
+                NewWaypoint();
+
+            //Hp_Slider.GetComponent<RectTransform>().position = cameraToLookAt.GetComponent<Camera>().WorldToScreenPoint(cameraToLookAt.gameObject.transform.position + new Vector3(0f, 1f, 0f));
         }
-
-
-        if (Input.GetButton("Jump") && viendo)
-            Picar();
-
-        if (atCheckpoint && timer < 7)
-            timer += Time.deltaTime;
-        else if (atCheckpoint)
-            NewWaypoint();
-
-        //Hp_Slider.GetComponent<RectTransform>().position = cameraToLookAt.GetComponent<Camera>().WorldToScreenPoint(cameraToLookAt.gameObject.transform.position + new Vector3(0f, 1f, 0f));
 
     }
 
@@ -110,6 +113,16 @@ public class UniatChan_Scr : MonoBehaviour
             anim.SetTrigger("Jump");
     }
 
+    void Morir()
+    {
+        HP = 0;
+        anim.SetBool("Walking", false);
+        anim.SetBool("Cry", true);
+        agent.enabled = false;
+        IsDead = true;
+        //Enemys.SetActive(false);
+    }
+
     public void AddDammage(float dmg)
     {
         if (IsDead)
@@ -117,11 +130,7 @@ public class UniatChan_Scr : MonoBehaviour
         HP -= dmg;
         if (HP <= 0)
         {
-            HP = 0;
-            agent.enabled = false;
-            IsDead = true;
-            anim.SetTrigger("Cry");
-            Enemys.SetActive(false);
+            Morir();
         }
         Hp_Slider.value = HP;
     }

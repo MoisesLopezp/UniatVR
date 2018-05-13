@@ -6,8 +6,8 @@ public class Scr_bullet : MonoBehaviour {
 	
 	void Update ()
     {
-        this.transform.Translate(this.transform.forward * Time.deltaTime * 30);
-	}
+        Destroy(this.gameObject, 5);
+    }
 
     private void OnTriggerEnter(Collider c)
     {

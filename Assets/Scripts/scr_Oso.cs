@@ -36,6 +36,7 @@ public class scr_Oso : MonoBehaviour {
                 Nav.isStopped = true;
                 Anim.SetTrigger("Attack");
                 Target.SendMessage("AddDammage", 10f);
+                Debug.Log("Le pegarona uniatchan");
             }
         }
         
