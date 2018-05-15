@@ -11,8 +11,8 @@ public class UniatChan_Scr : MonoBehaviour
     int index;
     Animator anim;
     NavMeshAgent agent;
-    bool viendo, atCheckpoint;
-    float timer;
+    bool viendo, atCheckpoint, hurt;
+    float timer, timer_hit;
 
     bool IsDead = false;
     float HP = 100f;
@@ -24,6 +24,8 @@ public class UniatChan_Scr : MonoBehaviour
 
     private void Start()
     {
+        hurt = false;
+        timer_hit = 0.0f;
         atCheckpoint = false;
         timer = 0;
         index = 0;
@@ -46,7 +48,15 @@ public class UniatChan_Scr : MonoBehaviour
                 if (Vector3.Distance(this.transform.position, waypoint[index].position) < 1)
                     ChangeState();
             }
-
+            if (hurt)
+            {
+                timer_hit += Time.deltaTime;
+                if (timer > 2)
+                {
+                    timer_hit = 0.0f;
+                    hurt = false;
+                }
+            }
 
             if (Input.GetButton("Jump") && viendo)
                 Picar();
@@ -58,7 +68,6 @@ public class UniatChan_Scr : MonoBehaviour
 
             //Hp_Slider.GetComponent<RectTransform>().position = cameraToLookAt.GetComponent<Camera>().WorldToScreenPoint(cameraToLookAt.gameObject.transform.position + new Vector3(0f, 1f, 0f));
         }
-
     }
 
     void ChangeState()
@@ -79,6 +88,7 @@ public class UniatChan_Scr : MonoBehaviour
     {
         anim.SetBool("Walking", false);
         anim.SetTrigger("Dance");
+        FindObjectOfType<MenuPause_Scr>().Ganar();
     }
 
     void NewWaypoint()
@@ -121,17 +131,23 @@ public class UniatChan_Scr : MonoBehaviour
         agent.enabled = false;
         IsDead = true;
         //Enemys.SetActive(false);
+        FindObjectOfType<Player_Scr>().Perder();
     }
 
     public void AddDammage(float dmg)
     {
         if (IsDead)
             return;
-        HP -= dmg;
-        if (HP <= 0)
+        if (!hurt)
         {
-            Morir();
+            Debug.Log("Le pegarona uniatchan");
+            hurt = true;
+            HP -= dmg;
+            if (HP <= 0)
+            {
+                Morir();
+            }
+            Hp_Slider.value = HP;
         }
-        Hp_Slider.value = HP;
     }
 }

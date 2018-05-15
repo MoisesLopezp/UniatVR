@@ -7,6 +7,7 @@ public class MenuPause_Scr : MonoBehaviour
 {
     bool pause;
     public GameObject menu;
+    public GameObject ganar, perder;
 
     private void Start()
     {
@@ -30,6 +31,20 @@ public class MenuPause_Scr : MonoBehaviour
             Time.timeScale = 1;
             menu.SetActive(false);
         }
+    }
+
+    public void Ganar()
+    {
+        ganar.SetActive(true);
+        ganar.transform.position = this.transform.position;
+        ganar.transform.eulerAngles = this.transform.rotation.eulerAngles;
+    }
+
+    public void Perder()
+    {
+        perder.SetActive(true);
+        perder.transform.position = this.transform.position;
+        perder.transform.eulerAngles = this.transform.rotation.eulerAngles;
     }
 
     public void Salir()

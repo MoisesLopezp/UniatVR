@@ -11,11 +11,15 @@ public class scr_Oso : MonoBehaviour {
     public GameObject Target;
 
     float HP = 100f;
+    float timer;
 
     bool IsDead = false;
+    bool atacando;
 
 	// Use this for initialization
 	void Start () {
+        atacando = false;
+        timer = 0.0f;
         //Target = FindObjectOfType<UniatChan_Scr>().gameObject;
         Nav = GetComponent<NavMeshAgent>();
         Anim = GetComponentInChildren<Animator>();
@@ -31,12 +35,21 @@ public class scr_Oso : MonoBehaviour {
             {
                 Nav.isStopped = false;
             }
-            if (Vector3.Distance(transform.position, Target.transform.position)<1.6f && !Nav.isStopped)
+            if (Vector3.Distance(transform.position, Target.transform.position)<1.6f && !Nav.isStopped && !atacando)
             {
+                atacando = true;
                 Nav.isStopped = true;
                 Anim.SetTrigger("Attack");
                 Target.SendMessage("AddDammage", 10f);
-                Debug.Log("Le pegarona uniatchan");
+            }
+            else if (atacando)
+            {
+                timer += Time.deltaTime;
+                if (timer > 2)
+                {
+                    timer = 0;
+                    atacando = false;
+                }
             }
         }
         
